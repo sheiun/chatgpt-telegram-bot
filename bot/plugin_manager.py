@@ -23,31 +23,39 @@ class PluginManager:
     """
 
     def __init__(self, config):
-        enabled_plugins = config.get('plugins', [])
+        enabled_plugins = config.get("plugins", [])
         plugin_mapping = {
-            'wolfram': WolframAlphaPlugin,
-            'weather': WeatherPlugin,
-            'crypto': CryptoPlugin,
-            'ddg_web_search': DDGWebSearchPlugin,
-            'ddg_image_search': DDGImageSearchPlugin,
-            'spotify': SpotifyPlugin,
-            'worldtimeapi': WorldTimeApiPlugin,
-            'youtube_audio_extractor': YouTubeAudioExtractorPlugin,
-            'dice': DicePlugin,
-            'deepl_translate': DeeplTranslatePlugin,
-            'gtts_text_to_speech': GTTSTextToSpeech,
-            'auto_tts': AutoTextToSpeech,
-            'whois': WhoisPlugin,
-            'webshot': WebshotPlugin,
-            'iplocation': IpLocationPlugin,
+            "wolfram": WolframAlphaPlugin,
+            "weather": WeatherPlugin,
+            "crypto": CryptoPlugin,
+            "ddg_web_search": DDGWebSearchPlugin,
+            "ddg_image_search": DDGImageSearchPlugin,
+            "spotify": SpotifyPlugin,
+            "worldtimeapi": WorldTimeApiPlugin,
+            "youtube_audio_extractor": YouTubeAudioExtractorPlugin,
+            "dice": DicePlugin,
+            "deepl_translate": DeeplTranslatePlugin,
+            "gtts_text_to_speech": GTTSTextToSpeech,
+            "auto_tts": AutoTextToSpeech,
+            "whois": WhoisPlugin,
+            "webshot": WebshotPlugin,
+            "iplocation": IpLocationPlugin,
         }
-        self.plugins = [plugin_mapping[plugin]() for plugin in enabled_plugins if plugin in plugin_mapping]
+        self.plugins = [
+            plugin_mapping[plugin]()
+            for plugin in enabled_plugins
+            if plugin in plugin_mapping
+        ]
 
     def get_functions_specs(self):
         """
         Return the list of function specs that can be called by the model
         """
-        return [spec for specs in map(lambda plugin: plugin.get_spec(), self.plugins) for spec in specs]
+        return [
+            spec
+            for specs in map(lambda plugin: plugin.get_spec(), self.plugins)
+            for spec in specs
+        ]
 
     async def call_function(self, function_name, helper, arguments):
         """
@@ -55,8 +63,11 @@ class PluginManager:
         """
         plugin = self.__get_plugin_by_function_name(function_name)
         if not plugin:
-            return json.dumps({'error': f'Function {function_name} not found'})
-        return json.dumps(await plugin.execute(function_name, helper, **json.loads(arguments)), default=str)
+            return json.dumps({"error": f"Function {function_name} not found"})
+        return json.dumps(
+            await plugin.execute(function_name, helper, **json.loads(arguments)),
+            default=str,
+        )
 
     def get_plugin_source_name(self, function_name) -> str:
         """
@@ -64,9 +75,16 @@ class PluginManager:
         """
         plugin = self.__get_plugin_by_function_name(function_name)
         if not plugin:
-            return ''
+            return ""
         return plugin.get_source_name()
 
     def __get_plugin_by_function_name(self, function_name):
-        return next((plugin for plugin in self.plugins
-                    if function_name in map(lambda spec: spec.get('name'), plugin.get_spec())), None)
+        return next(
+            (
+                plugin
+                for plugin in self.plugins
+                if function_name
+                in map(lambda spec: spec.get("name"), plugin.get_spec())
+            ),
+            None,
+        )
