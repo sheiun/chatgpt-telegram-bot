@@ -1,14 +1,16 @@
-FROM python:3.9-alpine
+FROM python:3.12-alpine
 
 ENV PYTHONFAULTHANDLER=1 \
      PYTHONUNBUFFERED=1 \
-     PYTHONDONTWRITEBYTECODE=1 \
-     PIP_DISABLE_PIP_VERSION_CHECK=on
+     PYTHONDONTWRITEBYTECODE=1
 
-RUN apk --no-cache add ffmpeg
+RUN apk --no-cache add ffmpeg curl
+RUN pip install uv
 
 WORKDIR /app
-COPY . .
-RUN pip install -r requirements.txt --no-cache-dir
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen
 
-CMD ["python", "bot/main.py"]
+COPY . .
+
+CMD ["uv", "run", "python", "bot/main.py"]

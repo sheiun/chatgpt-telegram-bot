@@ -1,5 +1,5 @@
 # ChatGPT Telegram Bot
-![python-version](https://img.shields.io/badge/python-3.9-blue.svg)
+![python-version](https://img.shields.io/badge/python-3.13-blue.svg)
 [![openai-version](https://img.shields.io/badge/openai-1.58.1-orange.svg)](https://openai.com/)
 [![license](https://img.shields.io/badge/License-GPL%202.0-brightgreen.svg)](LICENSE)
 [![Publish Docker image](https://github.com/n3d1117/chatgpt-telegram-bot/actions/workflows/publish.yaml/badge.svg)](https://github.com/n3d1117/chatgpt-telegram-bot/actions/workflows/publish.yaml)
@@ -50,7 +50,7 @@ If you want to help with translations, check out the [Translations Manual](https
 PRs are always welcome!
 
 ## Prerequisites
-- Python 3.9+
+- Python 3.13+
 - A [Telegram bot](https://core.telegram.org/bots#6-botfather) and its token (see [tutorial](https://core.telegram.org/bots/tutorial#obtain-your-bot-token))
 - An [OpenAI](https://openai.com) account (see [configuration](#configuration) section)
 
@@ -188,14 +188,14 @@ source venv/bin/activate
 venv\Scripts\activate
 ```
 
-3. Install the dependencies using `requirements.txt` file:
+3. Install the dependencies using `uv`:
 ```shell
-pip install -r requirements.txt
+uv sync
 ```
 
 4. Use the following command to start the bot:
 ```
-python bot/main.py
+uv run python bot/main.py
 ```
 
 #### Using Docker Compose
@@ -228,7 +228,7 @@ docker run -it --env-file .env chatgpt-telegram-bot
 #### Heroku
 Here is an example of `Procfile` for deploying using Heroku (thanks [err09r](https://github.com/err09r)!):
 ```
-worker: python -m venv venv && source venv/bin/activate && pip install -r requirements.txt && python bot/main.py
+worker: pip install uv && uv sync && uv run python bot/main.py
 ```
 
 ## Credits
