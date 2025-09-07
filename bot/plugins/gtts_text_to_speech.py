@@ -1,5 +1,4 @@
 import datetime
-from typing import Dict
 
 from gtts import gTTS
 
@@ -14,7 +13,7 @@ class GTTSTextToSpeech(Plugin):
     def get_source_name(self) -> str:
         return "gTTS"
 
-    def get_spec(self) -> [Dict]:
+    def get_spec(self) -> list[dict]:
         return [
             {
                 "name": "google_translate_text_to_speech",
@@ -37,7 +36,7 @@ class GTTSTextToSpeech(Plugin):
             }
         ]
 
-    async def execute(self, function_name, helper, **kwargs) -> Dict:
+    async def execute(self, function_name, helper, **kwargs) -> dict:
         tts = gTTS(kwargs["text"], lang=kwargs.get("lang", "en"))
         output = f"gtts_{datetime.datetime.now().timestamp()}.mp3"
         tts.save(output)

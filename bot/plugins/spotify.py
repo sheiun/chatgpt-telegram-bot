@@ -1,5 +1,4 @@
 import os
-from typing import Dict
 
 import spotipy
 from spotipy import SpotifyOAuth
@@ -38,7 +37,7 @@ class SpotifyPlugin(Plugin):
     def get_source_name(self) -> str:
         return "Spotify"
 
-    def get_spec(self) -> [Dict]:
+    def get_spec(self) -> list[dict]:
         time_range_param = {
             "type": "string",
             "enum": ["short_term", "medium_term", "long_term"],
@@ -115,7 +114,7 @@ class SpotifyPlugin(Plugin):
             },
         ]
 
-    async def execute(self, function_name, helper, **kwargs) -> Dict:
+    async def execute(self, function_name, helper, **kwargs) -> dict:
         time_range = kwargs.get("time_range", "short_term")
         limit = kwargs.get("limit", 5)
 
@@ -133,8 +132,10 @@ class SpotifyPlugin(Plugin):
             content_id = kwargs.get("id")
             search_type = kwargs.get("type", "track")
             return self.search_by_id(content_id, search_type)
+        else:
+            return {"Error": f"Unknown function: {function_name}"}
 
-    def fetch_currently_playing(self) -> Dict:
+    def fetch_currently_playing(self) -> dict:
         """
         Fetch user's currently playing song from Spotify
         """
@@ -152,7 +153,7 @@ class SpotifyPlugin(Plugin):
         }
         return {"result": result}
 
-    def fetch_top_tracks(self, time_range="short_term", limit=5) -> Dict:
+    def fetch_top_tracks(self, time_range="short_term", limit=5) -> dict:
         """
         Fetch user's top tracks from Spotify
         """
@@ -179,7 +180,7 @@ class SpotifyPlugin(Plugin):
             )
         return {"results": results}
 
-    def fetch_top_artists(self, time_range="short_term", limit=5) -> Dict:
+    def fetch_top_artists(self, time_range="short_term", limit=5) -> dict:
         """
         Fetch user's top artists from Spotify
         """
@@ -203,7 +204,7 @@ class SpotifyPlugin(Plugin):
             )
         return {"results": results}
 
-    def search_by_query(self, query, search_type, limit=5) -> Dict:
+    def search_by_query(self, query, search_type, limit=5) -> dict:
         """
         Search content by query on Spotify
         """
@@ -255,7 +256,7 @@ class SpotifyPlugin(Plugin):
                 )
         return {"results": results}
 
-    def search_by_id(self, content_id, search_type) -> Dict:
+    def search_by_id(self, content_id, search_type) -> dict:
         """
         Search content by exact id on Spotify
         """

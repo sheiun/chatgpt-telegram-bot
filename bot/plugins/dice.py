@@ -1,5 +1,3 @@
-from typing import Dict
-
 from .plugin import Plugin
 
 
@@ -11,7 +9,7 @@ class DicePlugin(Plugin):
     def get_source_name(self) -> str:
         return "Dice"
 
-    def get_spec(self) -> [Dict]:
+    def get_spec(self) -> list[dict]:
         return [
             {
                 "name": "send_dice",
@@ -31,7 +29,7 @@ class DicePlugin(Plugin):
             }
         ]
 
-    async def execute(self, function_name, helper, **kwargs) -> Dict:
+    async def execute(self, function_name, helper, **kwargs) -> dict:
         return {
             "direct_result": {
                 "kind": "dice",

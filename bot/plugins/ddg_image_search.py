@@ -1,7 +1,6 @@
 import os
 import random
 from itertools import islice
-from typing import Dict
 
 from duckduckgo_search import DDGS
 
@@ -19,7 +18,7 @@ class DDGImageSearchPlugin(Plugin):
     def get_source_name(self) -> str:
         return "DuckDuckGo Images"
 
-    def get_spec(self) -> [Dict]:
+    def get_spec(self) -> list[dict]:
         return [
             {
                 "name": "search_images",
@@ -117,7 +116,7 @@ class DDGImageSearchPlugin(Plugin):
             }
         ]
 
-    async def execute(self, function_name, helper, **kwargs) -> Dict:
+    async def execute(self, function_name, helper, **kwargs) -> dict:
         with DDGS() as ddgs:
             image_type = kwargs.get("type", "photo")
             ddgs_images_gen = ddgs.images(

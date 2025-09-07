@@ -1,5 +1,3 @@
-from typing import Dict
-
 import requests
 
 from .plugin import Plugin
@@ -14,7 +12,7 @@ class CryptoPlugin(Plugin):
     def get_source_name(self) -> str:
         return "CoinCap"
 
-    def get_spec(self) -> [Dict]:
+    def get_spec(self) -> list[dict]:
         return [
             {
                 "name": "get_crypto_rate",
@@ -32,5 +30,5 @@ class CryptoPlugin(Plugin):
             }
         ]
 
-    async def execute(self, function_name, helper, **kwargs) -> Dict:
+    async def execute(self, function_name, helper, **kwargs) -> dict:
         return requests.get(f"https://api.coincap.io/v2/rates/{kwargs['asset']}").json()

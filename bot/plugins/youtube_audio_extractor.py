@@ -1,6 +1,5 @@
 import logging
 import re
-from typing import Dict
 
 from pytube import YouTube
 
@@ -15,7 +14,7 @@ class YouTubeAudioExtractorPlugin(Plugin):
     def get_source_name(self) -> str:
         return "YouTube Audio Extractor"
 
-    def get_spec(self) -> [Dict]:
+    def get_spec(self) -> list[dict]:
         return [
             {
                 "name": "extract_youtube_audio",
@@ -33,7 +32,7 @@ class YouTubeAudioExtractorPlugin(Plugin):
             }
         ]
 
-    async def execute(self, function_name, helper, **kwargs) -> Dict:
+    async def execute(self, function_name, helper, **kwargs) -> dict:
         link = kwargs["youtube_link"]
         try:
             video = YouTube(link)

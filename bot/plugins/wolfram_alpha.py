@@ -1,5 +1,4 @@
 import os
-from typing import Dict
 
 import wolframalpha
 
@@ -22,7 +21,7 @@ class WolframAlphaPlugin(Plugin):
     def get_source_name(self) -> str:
         return "WolframAlpha"
 
-    def get_spec(self) -> [Dict]:
+    def get_spec(self) -> list[dict]:
         return [
             {
                 "name": "answer_with_wolfram_alpha",
@@ -40,7 +39,7 @@ class WolframAlphaPlugin(Plugin):
             }
         ]
 
-    async def execute(self, function_name, helper, **kwargs) -> Dict:
+    async def execute(self, function_name, helper, **kwargs) -> dict:
         client = wolframalpha.Client(self.app_id)
         res = client.query(kwargs["query"])
         try:

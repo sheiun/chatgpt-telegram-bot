@@ -1,5 +1,9 @@
-import os, requests, random, string
-from typing import Dict
+import os
+import random
+import string
+
+import requests
+
 from .plugin import Plugin
 
 
@@ -11,7 +15,7 @@ class WebshotPlugin(Plugin):
     def get_source_name(self) -> str:
         return "WebShot"
 
-    def get_spec(self) -> [Dict]:
+    def get_spec(self) -> list[dict]:
         return [
             {
                 "name": "screenshot_website",
@@ -29,11 +33,12 @@ class WebshotPlugin(Plugin):
             }
         ]
 
-    def generate_random_string(self, length):
+    @staticmethod
+    def generate_random_string(length):
         characters = string.ascii_letters + string.digits
         return "".join(random.choice(characters) for _ in range(length))
 
-    async def execute(self, function_name, helper, **kwargs) -> Dict:
+    async def execute(self, function_name, helper, **kwargs) -> dict:
         try:
             image_url = f"https://image.thum.io/get/maxAge/12/width/720/{kwargs['url']}"
 
@@ -48,7 +53,7 @@ class WebshotPlugin(Plugin):
                     os.makedirs("uploads/webshot")
 
                 image_file_path = os.path.join(
-                    "uploads/webshot", f"{self.generate_random_string(15)}.png"
+                    "uploads/webshot", f"{WebshotPlugin.generate_random_string(15)}.png"
                 )
                 with open(image_file_path, "wb") as f:
                     f.write(response.content)

@@ -1,5 +1,4 @@
-from abc import abstractmethod, ABC
-from typing import Dict
+from abc import ABC, abstractmethod
 
 
 class Plugin(ABC):
@@ -15,7 +14,7 @@ class Plugin(ABC):
         pass
 
     @abstractmethod
-    def get_spec(self) -> [Dict]:
+    def get_spec(self) -> list[dict]:
         """
         Function specs in the form of JSON schema as specified in the OpenAI documentation:
         https://platform.openai.com/docs/api-reference/chat/create#chat/create-functions
@@ -23,7 +22,7 @@ class Plugin(ABC):
         pass
 
     @abstractmethod
-    async def execute(self, function_name, helper, **kwargs) -> Dict:
+    async def execute(self, function_name, helper, **kwargs) -> dict:
         """
         Execute the plugin and return a JSON serializable response
         """

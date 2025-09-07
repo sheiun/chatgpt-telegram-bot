@@ -1,6 +1,6 @@
+import json
 import os.path
 import pathlib
-import json
 from datetime import date
 
 
@@ -54,7 +54,7 @@ class UsageTracker:
         self.user_file = f"{logs_dir}/{user_id}.json"
 
         if os.path.isfile(self.user_file):
-            with open(self.user_file, "r") as file:
+            with open(self.user_file) as file:
                 self.usage = json.load(file)
             if "vision_tokens" not in self.usage["usage_history"]:
                 self.usage["usage_history"]["vision_tokens"] = {}

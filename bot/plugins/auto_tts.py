@@ -1,6 +1,5 @@
 import logging
 import tempfile
-from typing import Dict
 
 from .plugin import Plugin
 
@@ -13,7 +12,7 @@ class AutoTextToSpeech(Plugin):
     def get_source_name(self) -> str:
         return "TTS"
 
-    def get_spec(self) -> [Dict]:
+    def get_spec(self) -> list[dict]:
         return [
             {
                 "name": "translate_text_to_speech",
@@ -31,7 +30,7 @@ class AutoTextToSpeech(Plugin):
             }
         ]
 
-    async def execute(self, function_name, helper, **kwargs) -> Dict:
+    async def execute(self, function_name, helper, **kwargs) -> dict:
         try:
             bytes, text_length = await helper.generate_speech(text=kwargs["text"])
             with tempfile.NamedTemporaryFile(delete=False, suffix=".opus") as temp_file:

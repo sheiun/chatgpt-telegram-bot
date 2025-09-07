@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import Dict
 
 import requests
 
@@ -14,7 +13,7 @@ class WeatherPlugin(Plugin):
     def get_source_name(self) -> str:
         return "OpenMeteo"
 
-    def get_spec(self) -> [Dict]:
+    def get_spec(self) -> list[dict]:
         latitude_param = {"type": "string", "description": "Latitude of the location"}
         longitude_param = {"type": "string", "description": "Longitude of the location"}
         unit_param = {
@@ -57,7 +56,7 @@ class WeatherPlugin(Plugin):
             },
         ]
 
-    async def execute(self, function_name, helper, **kwargs) -> Dict:
+    async def execute(self, function_name, helper, **kwargs) -> dict:
         url = (
             "https://api.open-meteo.com/v1/forecast"
             f"?latitude={kwargs['latitude']}"
@@ -89,3 +88,5 @@ class WeatherPlugin(Plugin):
                 "today": datetime.today().strftime("%A, %B %d, %Y"),
                 "forecast": results,
             }
+        else:
+            return {"Error": f"Unknown function: {function_name}"}

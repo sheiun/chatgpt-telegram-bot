@@ -1,6 +1,5 @@
 import os
 from itertools import islice
-from typing import Dict
 
 from duckduckgo_search import DDGS
 
@@ -18,7 +17,7 @@ class DDGWebSearchPlugin(Plugin):
     def get_source_name(self) -> str:
         return "DuckDuckGo"
 
-    def get_spec(self) -> [Dict]:
+    def get_spec(self) -> list[dict]:
         return [
             {
                 "name": "web_search",
@@ -108,7 +107,7 @@ class DDGWebSearchPlugin(Plugin):
             }
         ]
 
-    async def execute(self, function_name, helper, **kwargs) -> Dict:
+    async def execute(self, function_name, helper, **kwargs) -> dict:
         with DDGS() as ddgs:
             ddgs_gen = ddgs.text(
                 kwargs["query"],
@@ -120,7 +119,7 @@ class DDGWebSearchPlugin(Plugin):
             if results is None or len(results) == 0:
                 return {"Result": "No good DuckDuckGo Search Result was found"}
 
-            def to_metadata(result: Dict) -> Dict[str, str]:
+            def to_metadata(result: dict) -> dict[str, str]:
                 return {
                     "snippet": result["body"],
                     "title": result["title"],

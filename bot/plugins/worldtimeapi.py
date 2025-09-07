@@ -1,6 +1,7 @@
-import os, requests
-from typing import Dict
+import os
 from datetime import datetime
+
+import requests
 
 from .plugin import Plugin
 
@@ -21,7 +22,7 @@ class WorldTimeApiPlugin(Plugin):
     def get_source_name(self) -> str:
         return "WorldTimeAPI"
 
-    def get_spec(self) -> [Dict]:
+    def get_spec(self) -> list[dict]:
         return [
             {
                 "name": "worldtimeapi",
@@ -40,7 +41,7 @@ class WorldTimeApiPlugin(Plugin):
             }
         ]
 
-    async def execute(self, function_name, helper, **kwargs) -> Dict:
+    async def execute(self, function_name, helper, **kwargs) -> dict:
         timezone = kwargs.get("timezone", self.default_timezone)
         url = f"https://worldtimeapi.org/api/timezone/{timezone}"
 

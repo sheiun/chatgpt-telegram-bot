@@ -1,7 +1,6 @@
-from typing import Dict
-from .plugin import Plugin
-
 import whois
+
+from .plugin import Plugin
 
 
 class WhoisPlugin(Plugin):
@@ -12,7 +11,7 @@ class WhoisPlugin(Plugin):
     def get_source_name(self) -> str:
         return "Whois"
 
-    def get_spec(self) -> [Dict]:
+    def get_spec(self) -> list[dict]:
         return [
             {
                 "name": "get_whois",
@@ -27,7 +26,7 @@ class WhoisPlugin(Plugin):
             }
         ]
 
-    async def execute(self, function_name, helper, **kwargs) -> Dict:
+    async def execute(self, function_name, helper, **kwargs) -> dict:
         try:
             whois_result = whois.query(kwargs["domain"])
             if whois_result is None:

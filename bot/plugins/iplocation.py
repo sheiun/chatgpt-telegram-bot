@@ -1,5 +1,4 @@
 import requests
-from typing import Dict
 
 from .plugin import Plugin
 
@@ -12,7 +11,7 @@ class IpLocationPlugin(Plugin):
     def get_source_name(self) -> str:
         return "IP.FM"
 
-    def get_spec(self) -> [Dict]:
+    def get_spec(self) -> list[dict]:
         return [
             {
                 "name": "iplocation",
@@ -27,7 +26,7 @@ class IpLocationPlugin(Plugin):
             }
         ]
 
-    async def execute(self, function_name, helper, **kwargs) -> Dict:
+    async def execute(self, function_name, helper, **kwargs) -> dict:
         ip = kwargs.get("ip")
         BASE_URL = "https://api.ip.fm/?ip={}"
         url = BASE_URL.format(ip)
